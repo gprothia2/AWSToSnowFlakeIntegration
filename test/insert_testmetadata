@@ -1,0 +1,9 @@
+# Change bucket name and run the script to create the metadata for dataset Customer
+
+bucket_name='xxxx'
+
+aws dynamodb put-item \
+    --table-name MetadataRegistry  \
+    --item \
+        '{"DatasetName": {"S": "CUSTOMER"}, "LandingZoneLocation": {"S":"s3://$bucket_name/landing/customer"}, "StageZoneLocation": {"S":"s3://$bucket_name/stage/customer"}, "ArchiveZoneLocation": {"S":"s3://$bucket_name/Archive/customer"}, "SnowflakeTable": {"S":"CUSTOMER"}, "SnowflakePK": {"S":"C_CUSTKEY"}}'
+

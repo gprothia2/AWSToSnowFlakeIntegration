@@ -1,0 +1,30 @@
+
+##### Script to create Metadata Registry and FileLog Table. The name ofthe tables can change  #####
+
+#### Change the S3 bucket-name to your bucket you have created #####
+aws dynamodb delete-table --table-name MetadataRegistry
+sleep 5
+
+#### Metadata Registry should have Dataset Name as Hask Key   ######
+aws dynamodb create-table --table-name MetadataRegistry \
+--attribute-definitions \
+AttributeName=DatasetName,AttributeType=S \
+--key-schema \
+AttributeName=DatasetName,KeyType=HASH \
+--provisioned-throughput \
+ReadCapacityUnits=5,WriteCapacityUnits=5 \
+
+
+
+#### FileLog should have Dataset Name as Hask Key and  Date Time as  Sort Key   ######
+aws dynamodb delete-table --table-name FileLog
+sleep 5
+aws dynamodb create-table --table-name FileLog \
+--attribute-definitions \
+AttributeName=DatasetName,AttributeType=S \
+AttributeName=DateTime,AttributeType=S \
+--key-schema \
+AttributeName=DatasetName,KeyType=HASH \
+AttributeName=DateTime,KeyType=RANGE \
+--provisioned-throughput \
+ReadCapacityUnits=5,WriteCapacityUnits=5 \
